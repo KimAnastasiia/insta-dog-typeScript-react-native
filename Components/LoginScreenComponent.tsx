@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, TextInput, Pressable, Button } from 'react-native';
+import {View, Text, StyleSheet, TextInput, Pressable, Button, Alert } from 'react-native';
 import { RootStackParamList } from './AppNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -23,7 +23,7 @@ const Box: React.FC<BoxProps>=({placeholder,value,secureTextEntry, callBack})=>(
 );
 
 const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
-  
+
     const [email, setEmail]=useState<string>("")
     const [password, setPassword]=useState<string>("")
 
@@ -36,16 +36,23 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
           body: JSON.stringify({ 
               email : email,
               password: password,
-          },)
+          },),
         });
         if (response.ok){
-          let data = await response.json()
-          props.navigation.push('MainNavigator');
-          await AsyncStorage.setItem('apiKey', data.apiKey);
-          let myApiKey=await AsyncStorage.getItem('apiKey');
-          console.log(myApiKey);
-          AsyncStorage.setItem('userId', data.userId);
-          console.log(AsyncStorage.getItem('userId'));
+          let data = await response.json();
+          if (data.messege == "Incorrect password or email"){
+            return Alert.alert('Incorrect password or email', 'Check all the information again', [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+          } else {
+            props.navigation.push('MainNavigator');
+            await AsyncStorage.setItem('apiKey', data.apiKey);
+            /*
+            let myApiKey=await AsyncStorage.getItem('apiKey');
+            console.log(myApiKey);
+            */
+            AsyncStorage.setItem('userId', data.userId);
+          }
         }
 
     };
@@ -96,4 +103,4 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
       color: 'white',
     },
   });
-  export default LoginScreenComponent;
+export default LoginScreenComponent;
