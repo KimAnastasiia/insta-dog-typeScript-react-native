@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState,useEffect  } from 'react';
-import {View, Text, StyleSheet, TextInput, Pressable, Button, Alert,TextInputFocusEventData, NativeSyntheticEvent } from 'react-native';
+import {View, Text, StyleSheet, TextInput, Pressable, Alert,TextInputFocusEventData, NativeSyntheticEvent,TouchableOpacity } from 'react-native';
 import { RootStackParamList } from './AppNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -101,8 +101,10 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
           </Pressable>
         </View>
         <View style={[styles.layout, {height:"20%"}]}>
-          <Text style={{}}>Don't have an account?</Text>
-          <Button title="Sign up" onPress={() => props.navigation.push("Registration")}/>
+          <Text style={styles.text}>Don't have an account?</Text>
+          <TouchableOpacity style={styles.buttonNavigate} onPress={() => props.navigation.push("Registration")}>
+            <Text style={styles.buttonTextNavigate}>Sign up</Text>
+          </TouchableOpacity>
         </View>
       </View>
     ) 
@@ -139,6 +141,24 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
     alert:{
       color:"red",
       width:"90%"
+    },
+    buttonNavigate: {
+      backgroundColor: '#AC7878',
+      paddingVertical: 12,
+      paddingHorizontal: 32,
+      borderRadius:50,
+      width:"60%",
+      margin:20,
+    },
+    buttonTextNavigate: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign:"center"
+    },
+    text:{
+      fontSize:18,
+      color:"#696969"
     },
   });
 export default LoginScreenComponent;

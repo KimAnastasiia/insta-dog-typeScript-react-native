@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator: React.FC = () => {
   return (
-      <Stack.Navigator >
+      <Stack.Navigator screenOptions={{ headerTitle: '' }}>
         <Stack.Screen name='Login' component={LoginScreenComponent} />
         <Stack.Screen name='Registration' component={RegistrationScreenComponent} />
         <Stack.Screen name='MainNavigator' component={MainNavigatorScreenComponent} />
