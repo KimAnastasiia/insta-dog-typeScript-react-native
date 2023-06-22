@@ -58,7 +58,7 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
     };
 
     let login = async()=>{
-      if (errorEmail=="" && errorPassword!==""){
+      if (errorEmail=="" && errorPassword ==""){
         let response = await fetch ("http://192.168.31.75:4000/public/user/verification",{ 
           method: 'POST',
           headers: {
@@ -71,8 +71,8 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
         });
         if (response.ok){
           let data = await response.json();
-          if (data.messege == "Incorrect password or email"){
-            return Alert.alert('Incorrect password or email', 'Check all the information again', [
+          if (data.message == "Incorrect password" || data.message == "Incorrect email" ){
+            return Alert.alert(data.message, 'Fix the information', [
               {text: 'OK', onPress: () => console.log('OK Pressed')},
             ]);
           } else {
@@ -139,7 +139,7 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
     alert:{
       color:"red",
       width:"90%"
-    }
+    },
   });
 export default LoginScreenComponent;
 
