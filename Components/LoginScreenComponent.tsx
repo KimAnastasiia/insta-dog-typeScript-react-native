@@ -100,7 +100,7 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
               <Text style={styles.textInButton}>Sign in</Text>
           </Pressable>
         </View>
-        <View style={[styles.layout, {height:"20%"}]}>
+        <View style={styles.layout}>
           <Text style={styles.text}>Don't have an account?</Text>
           <TouchableOpacity style={styles.buttonNavigate} onPress={() => props.navigation.push("Registration")}>
             <Text style={styles.buttonTextNavigate}>Sign up</Text>
@@ -112,7 +112,7 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
   const styles = StyleSheet.create({
     layout: {
       justifyContent: 'center',
-      alignItems:"center",
+      alignItems: "center",
     },
     title: {
       margin: 24,
@@ -152,7 +152,7 @@ const LoginScreenComponent:React.FC<LoginScreenComponentProps>=(props)=>{
     },
     buttonTextNavigate: {
       color: '#fff',
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 'bold',
       textAlign:"center"
     },
