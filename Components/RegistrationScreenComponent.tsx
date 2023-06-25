@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, Button, Text } from 'react-native';
+import { TextInput, View, Text, Pressable } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from './AppNavigator';
 import stylesRegistration from '../Utility/allStyles/stylesRegistration';
@@ -101,7 +101,9 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                 placeholder={'Password'}
                 secureTextEntry={true}
             />
-            <Button title="Create ypur page" onPress={createAccount} />
+            <Pressable style={stylesRegistration.button} onPress={createAccount}>
+              <Text style={stylesRegistration.textInButton}>Register</Text>
+          </Pressable>
         </View>
     );
 };

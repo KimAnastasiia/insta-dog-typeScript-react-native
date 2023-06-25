@@ -15,16 +15,35 @@ const stylesRegistration = StyleSheet.create({
     layout: {
         flex:1,
         alignItems:'center',
-         justifyContent:'center',
+        justifyContent:'center',
     },
     title: {
-      textAlign:'center',
-      fontWeight:'bold',
-      fontSize:30,
+        textAlign:'center',
+        fontWeight:'bold',
+        fontSize:30,
+        marginBottom:20,
     },
     alert:{
         color:'red',
-        width:'90%'
+        width:'90%',
+    },
+    button:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius:50,
+        elevation: 3,
+        backgroundColor: 'black',
+        width:'90%',
+        marginTop:26,
+    },
+    textInButton: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
     },
 });
 
