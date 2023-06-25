@@ -9,7 +9,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import data from '../Utility/data';
-import stylesPosts from '../Utility/stylesPosts';
+import stylesPosts from '../Utility/allStyles/stylesPosts';
 interface WoofPostProps {
   image:string,
   title:string,
