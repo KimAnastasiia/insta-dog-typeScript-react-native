@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { TextInput, View, Text, Pressable,Alert, TouchableOpacity  } from 'react-native';
+import { TextInput, View, Text, Pressable,Alert, TouchableOpacity,TextInputFocusEventData,NativeSyntheticEvent  } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from './AppNavigator';
 import stylesRegistration from '../Utility/allStyles/stylesRegistration';
@@ -27,24 +27,31 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
   const [errors, setErrors] = useState<ErrorsUserInfo|any>({});
 
 
-  useEffect(()=>{
+    useEffect(()=>{
+        setErrors({...errors, email:''});
+    },[userInfo.email]);
 
-    let newStateErrors = { ...errors };
+    useEffect(()=>{
+        setErrors({...errors, name:''});
+    },[userInfo.name]);
 
-    if (userInfo?.name !== '' && userInfo?.name?.length < 2 ){
-        newStateErrors = {...newStateErrors, name:'Name too short'};
-    } else {
-        newStateErrors = {...newStateErrors, name:''};
-    }
-    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const onBlurEmail = ()=>{
 
-    if (userInfo?.email != null && userInfo?.email !== '' && !emailPattern.test(userInfo?.email)){
-        newStateErrors = {...newStateErrors, email:'Not valid email'};
-    } else {
-        newStateErrors = {...newStateErrors, email:''};
-    }
-    setErrors(newStateErrors);
-  },[userInfo]);
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if  (userInfo?.email != null && userInfo?.email !== '' && !emailPattern.test(userInfo?.email)){
+            setErrors({...errors, email:'Not valid email'});
+        } else {
+            setErrors({...errors, email:''});
+        }
+    };
+
+    const onBlurName = ()=>{
+        if (userInfo?.name !== '' && userInfo?.name?.length < 2 ){
+            setErrors({...errors, name:'Name too short'});
+        } else {
+            setErrors({...errors, name:''});
+        }
+    };
 
     let createAccount = async()=>{
 
@@ -60,7 +67,7 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
         });
         if (response.ok){
             let data = await response.json();
-            if (data.error){
+            if (data.error=="error in email"){
               return Alert.alert(data.message, 'Change mail', [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
               ]);
@@ -85,6 +92,7 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                     value={userInfo.name}
                     placeholder={'Name'}
                     secureTextEntry={false}
+                    onBlur={onBlurName}
                 />
                 {errors.name !== '' && <MyText content={errors.name}/>}
                 <MyInput
@@ -92,6 +100,7 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                     value={userInfo.email}
                     placeholder={'Email'}
                     secureTextEntry={false}
+                    onBlur={onBlurEmail}
                 />
                 {errors.email !== '' && <MyText content={errors.email}/>}
                 <MyInput
@@ -101,7 +110,7 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                     secureTextEntry={true}
                 />
                 <Pressable style={stylesRegistration.button} onPress={createAccount}>
-                <Text style={stylesRegistration.textInButton}>Register</Text>
+                    <Text style={stylesRegistration.textInButton}>Register</Text>
                 </Pressable>
             </View>
             <View style={stylesRegistration.layout}>
@@ -116,23 +125,25 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
 export default RegistrationScreenComponent;
 
 type onChangeTextFunction = (param: string ) => void;
-
+type onBlurFunction = (event: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 interface InputWithLabelProps {
     onChangeText:onChangeTextFunction,
     value:string,
     placeholder:string,
     secureTextEntry:boolean,
+    onBlur?:onBlurFunction
 }
 
-const MyInput: React.FC<InputWithLabelProps> = (props) => {
+const MyInput: React.FC<InputWithLabelProps> = ({onChangeText,value,placeholder,secureTextEntry, onBlur}) => {
 
     return (
       <TextInput
         style={stylesRegistration.textInput}
-        onChangeText={props.onChangeText}
-        value={props.value}
-        placeholder={props.placeholder}
-        secureTextEntry={props.secureTextEntry}
+        onChangeText={onChangeText}
+        value={value}
+        placeholder={placeholder}
+        secureTextEntry={secureTextEntry}
+        onBlur={onBlur}
       />
 
   );
