@@ -2,11 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { TextInput, View, Text, Pressable } from 'react-native';
+import { TextInput, View, Text, Pressable,Alert  } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from './AppNavigator';
 import stylesRegistration from '../Utility/allStyles/stylesRegistration';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 type RegistrationScreenComponentProps=NativeStackScreenProps<RootStackParamList, 'Registration'>
 
 type UserInfo= {
@@ -21,7 +21,7 @@ type ErrorsUserInfo= {
     name:string
 }
 
-const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = () => {
+const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = (props) => {
 
   const [userInfo, setUserInfo] = useState<UserInfo|any>({});
   const [errors, setErrors] = useState<ErrorsUserInfo|any>({});
@@ -31,7 +31,7 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
 
     let newStateErrors = { ...errors };
 
-    if (userInfo?.name !== '' && userInfo?.name?.length < 5 ){
+    if (userInfo?.name !== '' && userInfo?.name?.length < 2 ){
         newStateErrors = {...newStateErrors, name:'Name too short'};
     } else {
         newStateErrors = {...newStateErrors, name:''};
@@ -46,9 +46,9 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
     setErrors(newStateErrors);
   },[userInfo]);
 
-  let createAccount = async()=>{
+    let createAccount = async()=>{
 
-        await fetch('http://192.168.31.75:4000/public/user',{
+        let response = await fetch('http://192.168.31.75:4000/public/user',{
 
             method: 'POST',
             headers: {
@@ -58,6 +58,22 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
             body:
                 JSON.stringify(userInfo),
         });
+        if (response.ok){
+            let data = await response.json();
+            if (data.error){
+              return Alert.alert(data.message, 'Change mail', [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]);
+            } else {
+              props.navigation.push('MainNavigator');
+              await AsyncStorage.setItem('apiKey', data.apiKey);
+              /*
+              let myApiKey=await AsyncStorage.getItem('apiKey');
+              console.log(myApiKey);
+              */
+              AsyncStorage.setItem('userId', data.userId);
+            }
+        }
     };
     return (
 
