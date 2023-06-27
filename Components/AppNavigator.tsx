@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreenComponent from './LoginScreenComponent';
 import RegistrationScreenComponent from './RegistrationScreenComponent';

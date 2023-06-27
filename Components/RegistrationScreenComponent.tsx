@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { TextInput, View, Text, Pressable } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from './AppNavigator';
@@ -12,16 +13,12 @@ type UserInfo= {
     email:string
     password:string
     name:string
-    breed:string
-    date:number
 }
 
 type ErrorsUserInfo= {
     email:string
     password:string
     name:string
-    breed:string
-    date:string
 }
 
 const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = () => {
@@ -32,9 +29,9 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
 
   useEffect(()=>{
 
-    let newStateErrors = { ...errors }
+    let newStateErrors = { ...errors };
 
-    if (userInfo?.name != '' && userInfo?.name?.length < 5 ){
+    if (userInfo?.name !== '' && userInfo?.name?.length < 5 ){
         newStateErrors = {...newStateErrors, name:'Name too short'};
     } else {
         newStateErrors = {...newStateErrors, name:''};
@@ -62,8 +59,6 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                 JSON.stringify(userInfo),
         });
     };
-
-
     return (
 
         <View style={stylesRegistration.layout}>
@@ -75,19 +70,6 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                 secureTextEntry={false}
             />
             {errors.name !== '' && <MyText content={errors.name}/>}
-                <MyInput
-                onChangeText={(text) => { setUserInfo({...userInfo, breed:text})} }
-                value={userInfo.breed}
-                placeholder={'Breed'}
-                secureTextEntry={false}
-            />
-
-            <MyInput
-                onChangeText={(text) => { setUserInfo({...userInfo, date:text})} }
-                value={userInfo.date}
-                placeholder={'Date'}
-                secureTextEntry={false}
-            />
             <MyInput
                 onChangeText={(text) => { setUserInfo({...userInfo, email:text})}}
                 value={userInfo.email}
