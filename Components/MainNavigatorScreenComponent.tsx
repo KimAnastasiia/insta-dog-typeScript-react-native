@@ -9,12 +9,13 @@ const Tap = createBottomTabNavigator();
 
 type MainNavigatorScreenComponentProps=NativeStackScreenProps<RootStackParamList, 'MainNavigator'>
 
-const MainNavigatorScreenComponent:React.FC<MainNavigatorScreenComponentProps>=()=>(
+const MainNavigatorScreenComponent:React.FC<MainNavigatorScreenComponentProps> = ()=>(
 
-    <Tap.Navigator> 
+    <Tap.Navigator>
         <Tap.Screen name="Posts" component={PostsScreenComponent} />
         <Tap.Screen name="Profile" component={ProfileScreenComponent} />
     </Tap.Navigator>
 
-)
-export default MainNavigatorScreenComponent
+);
+export default MainNavigatorScreenComponent;
+

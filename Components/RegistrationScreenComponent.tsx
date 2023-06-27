@@ -94,7 +94,7 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                     secureTextEntry={false}
                     onBlur={onBlurName}
                 />
-                {errors.name !== '' && <MyText content={errors.name}/>}
+                {errors.name && <MyText content={errors.name}/>}
                 <MyInput
                     onChangeText={(text) => { setUserInfo({...userInfo, email:text})}}
                     value={userInfo.email}
@@ -102,7 +102,7 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
                     secureTextEntry={false}
                     onBlur={onBlurEmail}
                 />
-                {errors.email !== '' && <MyText content={errors.email}/>}
+                {(errors.email) && <MyText content={errors.email}/>}
                 <MyInput
                     onChangeText={(text) => { setUserInfo({...userInfo, password:text})} }
                     value={userInfo.password}
