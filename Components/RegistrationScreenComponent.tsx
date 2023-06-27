@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { TextInput, View, Text, Pressable,Alert  } from 'react-native';
+import { TextInput, View, Text, Pressable,Alert, TouchableOpacity  } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from './AppNavigator';
 import stylesRegistration from '../Utility/allStyles/stylesRegistration';
@@ -77,31 +77,38 @@ const RegistrationScreenComponent: React.FC<RegistrationScreenComponentProps> = 
     };
     return (
 
-        <View style={stylesRegistration.layout}>
-            <Text style={stylesRegistration.title}>Create profile</Text>
-            <MyInput
-                onChangeText={(text) => {setUserInfo({...userInfo, name:text}); } }
-                value={userInfo.name}
-                placeholder={'Name'}
-                secureTextEntry={false}
-            />
-            {errors.name !== '' && <MyText content={errors.name}/>}
-            <MyInput
-                onChangeText={(text) => { setUserInfo({...userInfo, email:text})}}
-                value={userInfo.email}
-                placeholder={'Email'}
-                secureTextEntry={false}
-            />
-            {errors.email !== '' && <MyText content={errors.email}/>}
-            <MyInput
-                onChangeText={(text) => { setUserInfo({...userInfo, password:text})} }
-                value={userInfo.password}
-                placeholder={'Password'}
-                secureTextEntry={true}
-            />
-            <Pressable style={stylesRegistration.button} onPress={createAccount}>
-              <Text style={stylesRegistration.textInButton}>Register</Text>
-          </Pressable>
+        <View style={{ height:"100%"}}>
+            <View style={[stylesRegistration.layout, {height:'80%'}]}>
+                <Text style={stylesRegistration.title}>Create profile</Text>
+                <MyInput
+                    onChangeText={(text) => {setUserInfo({...userInfo, name:text}); } }
+                    value={userInfo.name}
+                    placeholder={'Name'}
+                    secureTextEntry={false}
+                />
+                {errors.name !== '' && <MyText content={errors.name}/>}
+                <MyInput
+                    onChangeText={(text) => { setUserInfo({...userInfo, email:text})}}
+                    value={userInfo.email}
+                    placeholder={'Email'}
+                    secureTextEntry={false}
+                />
+                {errors.email !== '' && <MyText content={errors.email}/>}
+                <MyInput
+                    onChangeText={(text) => { setUserInfo({...userInfo, password:text})} }
+                    value={userInfo.password}
+                    placeholder={'Password'}
+                    secureTextEntry={true}
+                />
+                <Pressable style={stylesRegistration.button} onPress={createAccount}>
+                <Text style={stylesRegistration.textInButton}>Register</Text>
+                </Pressable>
+            </View>
+            <View style={stylesRegistration.layout}>
+                <TouchableOpacity style={stylesRegistration.buttonNavigate} onPress={() => props.navigation.push("Login")}>
+                    <Text style={stylesRegistration.buttonTextNavigate}>Login</Text>
+                </TouchableOpacity>
+          </View>
         </View>
     );
 };

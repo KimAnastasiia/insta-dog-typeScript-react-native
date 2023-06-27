@@ -13,7 +13,6 @@ const stylesRegistration = StyleSheet.create({
         width:'80%',
     },
     layout: {
-        flex:1,
         alignItems:'center',
         justifyContent:'center',
     },
@@ -35,7 +34,7 @@ const stylesRegistration = StyleSheet.create({
         borderRadius:50,
         elevation: 3,
         backgroundColor: 'black',
-        width:'90%',
+        width:'80%',
         marginTop:26,
     },
     textInButton: {
@@ -44,6 +43,23 @@ const stylesRegistration = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: 'white',
+    },
+    buttonNavigate: {
+        backgroundColor: '#AC7878',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius:50,
+        width:"60%",
+        margin:20,
+    },
+    buttonTextNavigate: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
+        textAlign:'center',
+    },
+    box:{
+        
     },
 });
 
